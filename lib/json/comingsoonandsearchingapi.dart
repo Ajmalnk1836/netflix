@@ -14,7 +14,7 @@ List<Classmodels> comingsoon =[];
         "https://api.themoviedb.org/3/trending/all/day?api_key=61ddb3f11c2b0a42d4a3dc020c0dfd1c"));
     //print(response.body);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200) {   
       final _response = jsonDecode(response.body);
       Iterable list = _response["results"];
       comingsoon = list.map((movie) => Classmodels.fromJson(movie)).toList();
