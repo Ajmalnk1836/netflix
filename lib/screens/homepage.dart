@@ -178,7 +178,7 @@ class _HomepageState extends State<Homepage> {
                             height: 5,
                           ),
                           Text(
-                            "Info color",   
+                            "Info ",   
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
