@@ -18,7 +18,7 @@ class DownloadsPage extends StatelessWidget {
     return SafeArea(
         child: Column(
       children: [
-        bottombarWidget(heading: "Downloads"),
+        bottombarWidget(heading: "Downloads"),  
         Container(
           height: 50,
           decoration: BoxDecoration(color: Colors.grey.withOpacity(0.2)),
