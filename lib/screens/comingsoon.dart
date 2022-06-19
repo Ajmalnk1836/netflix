@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:netflix/json/comingsoonandsearchingapi.dart';
-import 'package:netflix/models/comingsoonclassmodels/classmodels.dart';
-//import 'package:tmdb_api/tmdb_api.dart';
+import 'package:netflix/screens/widgets/bottombar.dart';
+
 
 class Comingsoon extends StatefulWidget {
   const Comingsoon({Key? key}) : super(key: key);
@@ -11,39 +11,22 @@ class Comingsoon extends StatefulWidget {
   State<Comingsoon> createState() => _ComingsoonState();
 }
 
-class _ComingsoonState extends State<Comingsoon> {
+class _ComingsoonState extends State<Comingsoon> {   
+  
   @override
   void initState() {
    fetchDatas();
-    super.initState();
+    super.initState();        
   }
-   
-
-  // List<Classmodels> comingsoon =[];
-  // Future  fetchDatas() async {
-  //   final response = await http.get(Uri.parse(
-  //       "https://api.themoviedb.org/3/trending/all/day?api_key=61ddb3f11c2b0a42d4a3dc020c0dfd1c"));
-  //   //print(response.body);
-
-  //   if (response.statusCode == 200) {
-  //     final _response = jsonDecode(response.body);
-  //     Iterable list = _response["results"];
-  //     comingsoon = list.map((movie) => Classmodels.fromJson(movie)).toList();
-     
-
-  //   }else{ 
-  //     throw Exception("Failed}");
-  //   }   
-  // }
-
-  
+ 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       //  appBar: getAppbar(),
-      body: getBody(),
+      body:  getBody(),
+         
     );
   }
   Widget getBody() {
@@ -61,42 +44,9 @@ class _ComingsoonState extends State<Comingsoon> {
                  const   SizedBox(
                       height: 5,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Padding(
-                            padding:  EdgeInsets.only(left: 10.0),
-                            child: Text(
-                              "Coming soon",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold),
-                            )),
-                        Row(
-                          children: [
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.collections_bookmark,
-                                  color: Colors.white,
-                                  size: 35,
-                                )),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Image.asset(
-                                "assets/images/profile.jpeg",
-                                width: 26,
-                                height: 26,
-                                fit: BoxFit.cover,
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
+                    bottombarWidget(heading: "Coming Soon"),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),  
                       child: Row(
                         children: [
                           Icon(
@@ -131,33 +81,33 @@ class _ComingsoonState extends State<Comingsoon> {
                             height: 20,
                           ),
                           Container(
-                            height: 250,  
+                            height: 400    ,    
                             child: Stack(
                               children: [   
                                 Container(
                                   width: MediaQuery.of(context).size.width, 
                                   child: Image.network('http://image.tmdb.org/t/p/w500' + comingsoon[index].posterPath!   ,
-                                  fit: BoxFit.cover,         
-                                 // width: 27,      
+                                  fit: BoxFit.fill        ,         
+                                 // width: 27,       
                                    ),
                                 ), 
-                              ],
+                              ],  
                             ),
                           ),
                           const SizedBox(
                             height: 15,
-                          ),
+                          ), 
                           Padding(
                             padding:
                                 const EdgeInsets.only(left: 20.0, right: 20),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween, 
                               children: [
                                 Image.network('http://image.tmdb.org/t/p/w500' + comingsoon[index].backdropPath!,fit: BoxFit.cover,
                                 width: 120,),
                                 Row(
                                   children: [
-                                    Column(
+                                    Column(   
                                       children: const [
                                         Icon(
                                           Icons.notifications_none_outlined,
@@ -190,11 +140,11 @@ class _ComingsoonState extends State<Comingsoon> {
                         const  SizedBox(
                             height: 15,
                           ),
-                          Padding(
+                          Padding(     
                             padding:
                                 const EdgeInsets.only(left: 10.0, right: 10),
                             child: Text(
-                             comingsoon[index].originalTitle.toString(), 
+                             comingsoon[index].originalTitle.toString() , 
                               style:const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -231,13 +181,22 @@ class _ComingsoonState extends State<Comingsoon> {
                         ],
                       );
                     }))
+                    
                   ],
                 ),
               ),
+              
             ),
+            
           ],
+          
         ),
+        
       ),
+      
     );
+    
   }
+  
 }
+

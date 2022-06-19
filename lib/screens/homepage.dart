@@ -21,6 +21,8 @@ class _HomepageState extends State<Homepage> {
   List trendingmovies = [];
   List toprated = [];
   List tvshows = [];
+  List upcoming = [];
+  List latest = [];
   final String apikey = '61ddb3f11c2b0a42d4a3dc020c0dfd1c';
   final readacesstoken =
       'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MWRkYjNmMTFjMmIwYTQyZDRhM2RjMDIwYzBkZmQxYyIsInN1YiI6IjYyYTQ5NDg2ODUwMDVkMmIxNmNmY2M4YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qWKBA3hCdpPK0o8-CNXai296l3gJCtVXjGh2lrDfVhw';
@@ -34,7 +36,9 @@ class _HomepageState extends State<Homepage> {
 
     Map trendingresult = await tmdbWIthCustomLogs.v3.trending.getTrending();
     Map topratedresult = await tmdbWIthCustomLogs.v3.movies.getTopRated();
-    Map movieshowa = await tmdbWIthCustomLogs.v3.tv.getPopular();
+    Map movieshowa = await tmdbWIthCustomLogs.v3.movies.getPopular();
+    Map upcomings = await tmdbWIthCustomLogs.v3.movies.getUpcoming();
+    Map tvpopulars = await tmdbWIthCustomLogs.v3.movies.getNowPlaying(); 
 
 //print(trendingresult);
 
@@ -42,6 +46,10 @@ class _HomepageState extends State<Homepage> {
       trendingmovies = trendingresult['results'];
       toprated = topratedresult['results'];
       tvshows = movieshowa['results'];
+      upcoming = upcomings['results'];
+      latest = tvpopulars['results'];
+
+      print("tv shows = ${latest}"); 
     });
     //print(trendingmovies);
   }
@@ -67,54 +75,58 @@ class _HomepageState extends State<Homepage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Stack(
-                    children: [
-                      Container(
-                        height: 500,
-                        decoration: const BoxDecoration(
-                            color: Colors.green,
-                            image: DecorationImage(
-                                image: AssetImage("assets/images/banner.webp"),
-                                fit: BoxFit.cover)),
-                      ),
-                      Container(
-                        height: 500,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.black.withOpacity(0.85),
-                              Colors.black.withOpacity(0),
-                            ],
-                            end: Alignment.topCenter,
-                            begin: Alignment.bottomCenter,
+                  GestureDetector(
+                    onTap: () {},
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: 500,
+                          decoration: const BoxDecoration(
+                              color: Colors.green,
+                              image: DecorationImage(
+                                  image:
+                                      AssetImage("assets/images/banner.webp"),
+                                  fit: BoxFit.cover)),
+                        ),
+                        Container(
+                          height: 500,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.black.withOpacity(0.85),
+                                Colors.black.withOpacity(0),
+                              ],
+                              end: Alignment.topCenter,
+                              begin: Alignment.bottomCenter,
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                        height: 500,
-                        width: size.width,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              "assets/images/title_img_2.webp",
-                              width: 300,
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            const Text(
-                              "Adventure - sci-vfd",
-                              style: TextStyle(
-                                fontSize: 11,
-                                color: Colors.white,
+                        Container(
+                          height: 500,
+                          width: size.width,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "assets/images/title_img_2.webp",
+                                width: 300,
                               ),
-                            )
-                          ],
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              const Text(
+                                "Adventure",
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.white,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   const SizedBox(
                     height: 15,
@@ -178,7 +190,7 @@ class _HomepageState extends State<Homepage> {
                             height: 5,
                           ),
                           Text(
-                            "Info ",   
+                            "Info ",
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
@@ -192,12 +204,6 @@ class _HomepageState extends State<Homepage> {
                     height: 40,
                   ),
                   GestureDetector(
-//                     onTap: () {
-//                       Navigator.of(context).push(MaterialPageRoute(builder: (ctx){
-// return Detailspage(
-//  );
-//                       }));
-//                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -227,8 +233,6 @@ class _HomepageState extends State<Homepage> {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(builder: (ctx) {
                                       return Detailspage(
-                                        // heading: trendingmovies[index]['name']
-                                        // names: trendingmovies[index]['name'],
                                         name: trendingmovies[index]['title'],
                                         bannerurl:
                                             'http://image.tmdb.org/t/p/w500' +
@@ -288,18 +292,41 @@ class _HomepageState extends State<Homepage> {
                             padding: const EdgeInsets.only(left: 10.0),
                             child: Row(
                               children: List.generate(toprated.length, (index) {
-                                return Container(
-                                  margin: const EdgeInsets.only(right: 8),
-                                  width: 110,
-                                  height: 160,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                              'http://image.tmdb.org/t/p/w500' +
-                                                  toprated[index]
-                                                      ['poster_path']),
-                                          fit: BoxFit.cover),
-                                      borderRadius: BorderRadius.circular(6)),
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(builder: (ctx) {
+                                      return Detailspage(
+                                        name: toprated[index]['title'],
+                                        bannerurl:
+                                            'http://image.tmdb.org/t/p/w500' +
+                                                toprated[index]
+                                                    ['backdrop_path'],
+                                        posterurl:
+                                            'http://image.tmdb.org/t/p/w500' +
+                                                toprated[index]['poster_path'],
+                                        description: toprated[index]
+                                            ['overview'],
+                                        vote: toprated[index]['vote_average']
+                                            .toString(),
+                                        launching_Date: toprated[index]
+                                            ['release_date'],
+                                      );
+                                    }));
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.only(right: 8),
+                                    width: 110,
+                                    height: 160,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                                'http://image.tmdb.org/t/p/w500' +
+                                                    toprated[index]
+                                                        ['poster_path']),
+                                            fit: BoxFit.cover),
+                                        borderRadius: BorderRadius.circular(6)),
+                                  ),
                                 );
                               }),
                             ),
@@ -318,7 +345,7 @@ class _HomepageState extends State<Homepage> {
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         SingleChildScrollView(
@@ -326,18 +353,40 @@ class _HomepageState extends State<Homepage> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10.0),
                             child: Row(
-                              children:
-                                  List.generate(trendingList.length, (index) {
-                                return Container(
-                                  margin: EdgeInsets.only(right: 8),
-                                  width: 110,
-                                  height: 160,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              trendingList[index]["img"]),
-                                          fit: BoxFit.cover),
-                                      borderRadius: BorderRadius.circular(6)),
+                              children: List.generate(tvshows.length, (index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) {
+                                      return Detailspage(
+                                        name: tvshows[index]['title'],
+                                        bannerurl:
+                                            'http://image.tmdb.org/t/p/w500' +
+                                                tvshows[index]['backdrop_path'],
+                                        posterurl:
+                                            'http://image.tmdb.org/t/p/w500' +
+                                                tvshows[index]['poster_path'],
+                                        description: tvshows[index]['overview'],
+                                        vote: tvshows[index]['vote_average']
+                                            .toString(),
+                                        launching_Date: tvshows[index]
+                                            ['release_date'],
+                                      );
+                                    }));
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.only(right: 8),
+                                    width: 110,
+                                    height: 160,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                                'http://image.tmdb.org/t/p/w500' +
+                                                    tvshows[index]
+                                                        ['poster_path']),
+                                            fit: BoxFit.cover),
+                                        borderRadius: BorderRadius.circular(6)),
+                                  ),
                                 );
                               }),
                             ),
@@ -364,18 +413,42 @@ class _HomepageState extends State<Homepage> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10.0),
                             child: Row(
-                              children:
-                                  List.generate(originalList.length, (index) {
-                                return Container(
-                                  margin: EdgeInsets.only(right: 8),
-                                  width: 165,
-                                  height: 300,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              originalList[index]["img"]),
-                                          fit: BoxFit.cover),
-                                      borderRadius: BorderRadius.circular(6)),
+                              children: List.generate(latest.length, (index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) {
+                                      return Detailspage(
+                                        name: latest[index]['title'],
+                                        bannerurl:
+                                            'http://image.tmdb.org/t/p/w500' +
+                                                latest[index]
+                                                    ['backdrop_path'],
+                                        posterurl:
+                                            'http://image.tmdb.org/t/p/w500' +
+                                                latest[index]['poster_path'],
+                                        description: latest[index]
+                                            ['overview'],
+                                        vote: latest[index]['vote_average']
+                                            .toString(),
+                                        launching_Date: latest[index]
+                                            ['release_date'],
+                                      );
+                                    }));
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.only(right: 8),
+                                    width: 165,
+                                    height: 300,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                                'http://image.tmdb.org/t/p/w500' +
+                                                    latest[index]
+                                                        ['poster_path']),
+                                            fit: BoxFit.cover),
+                                        borderRadius: BorderRadius.circular(6)),
+                                  ),
                                 );
                               }),
                             ),
@@ -403,23 +476,46 @@ class _HomepageState extends State<Homepage> {
                             padding: const EdgeInsets.only(left: 10.0),
                             child: Row(
                               children:
-                                  List.generate(trendingList.length, (index) {
-                                return Container(
-                                  margin: EdgeInsets.only(right: 8),
-                                  width: 110,
-                                  height: 160,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              trendingList[index]["img"]),
-                                          // image: NetworkImage(
-                                          //     'http://image.tmdb.org/t/p/w500' +
-                                          //         tvshows[index]
-                                          //             ['poster_path']),
-                                          fit: BoxFit.cover),
-                                      borderRadius: BorderRadius.circular(6)),
+                                  List.generate(upcoming.length, (index) {
+                                return GestureDetector(
+                                   onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) {
+                                      return Detailspage(
+                                        name: latest[index]['title'],
+                                        bannerurl:
+                                            'http://image.tmdb.org/t/p/w500' +
+                                                upcoming[index]
+                                                    ['backdrop_path'],
+                                        posterurl:
+                                            'http://image.tmdb.org/t/p/w500' +
+                                                upcoming[index]['poster_path'],
+                                        description: latest[index]
+                                            ['overview'],
+                                        vote: latest[index]['vote_average']
+                                            .toString(),
+                                        launching_Date: latest[index]
+                                            ['release_date'],
+                                      );
+                                    }));
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.only(right: 8),
+                                    width: 110,
+                                    height: 160,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            // image: AssetImage(
+                                            //     trendingList[index]["img"]),
+                                            image: NetworkImage(
+                                                'http://image.tmdb.org/t/p/w500' +
+                                                    upcoming[index]     
+                                                        ['poster_path']),
+                                            fit: BoxFit.cover),
+                                        borderRadius: BorderRadius.circular(6)),
+                                  ),
                                 );
-                              }),
+                              }),   
                             ),
                           ),
                         ),

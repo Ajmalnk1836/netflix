@@ -6,7 +6,7 @@ List mylist = [
 ];
 List popularList = [
   {"img": "assets/images/img_5.png"},
-  {"img": "assets/images/img_6.png"},
+  {"img": "assets/images/img_6.png"},      
   {"img": "assets/images/img_7.png"},
   {"img": "assets/images/img_8.png"},
 ];
@@ -17,7 +17,7 @@ List trendingList = [
   {"img": "assets/images/img_12.png"},
 ];
 
-List originalList = [
+List originalList = [ 
   {"img": "assets/images/img_13.png"},
   {"img": "assets/images/img_14.png"},
   {"img": "assets/images/img_17.png"},
@@ -72,3 +72,4 @@ List comingsoonJson = [
     "title": "peaky blinderes",
   },
 ];
+       

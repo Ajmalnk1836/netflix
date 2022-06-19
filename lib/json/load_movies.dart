@@ -18,8 +18,8 @@
 //  Map movieshowa = a
 //final String apikey = '61ddb3f11c2b0a42d4a3dc020c0dfd1c';
 
-// }
-
+// }   
+ 
 const String apikey = '61ddb3f11c2b0a42d4a3dc020c0dfd1c';
 final readacesstoken =
     'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MWRkYjNmMTFjMmIwYTQyZDRhM2RjMDIwYzBkZmQxYyIsInN1YiI6IjYyYTQ5NDg2ODUwMDVkMmIxNmNmY2M4YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qWKBA3hCdpPK0o8-CNXai296l3gJCtVXjGh2lrDfVhw';

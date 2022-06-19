@@ -50,10 +50,10 @@ class _SearchScreenState extends State<SearchScreen> {
       scrollDirection: Axis.vertical,
       child: Column(
         children: [
-          Text("Top Searchs",
+         const Text("Top Searchs",
           style: TextStyle(
             color: Colors.white,
-            fontSize: 18,
+          fontSize: 18,
             fontWeight: FontWeight.bold
           ),),
        const   SizedBox(height: 12,),
@@ -76,28 +76,25 @@ class _SearchScreenState extends State<SearchScreen> {
                                   Container(
                                     width: 120,
                                     height: 70,
-                                    // decoration: BoxDecoration(
-                                    //   //color: Colors.red, 
-                                    //   image: DecorationImage(image: AssetImage(comingsoonJson[index]["img"],
-                                    //   ),
-                                    //   fit: BoxFit.cover),
-                                    // ),
+                                   
                                     child: Image.network('http://image.tmdb.org/t/p/w500' + comingsoon[index].posterPath!,
                                     fit: BoxFit.cover,),
                                   ),
                                   Container(
                                     width: 120,
                                     height: 70,
-                                    decoration: BoxDecoration(
+                                    decoration:const BoxDecoration(
                                      // color: Colors.red
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(width: 10,),
+                           const   SizedBox(width: 10,),
                               Container(
                                 width:(size.width-36) * 0.4,
-                                child:Text(comingsoon[index].title.toString(),style: TextStyle(color: Colors.white,
+                                child:Text(comingsoon[index].title.toString() == "null" 
+                                ? "Not released yet"      
+                                :  comingsoon[index].title.toString(),style:const TextStyle(color: Colors.white,   
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
                                 ),
@@ -120,7 +117,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               border: Border.all(width: 2,
                               color: Colors.white)
                             ),
-                            child: Center(
+                            child:const Center(
                               child: Icon(Icons.play_arrow,
                               color: Colors.white,),
                             ),
